@@ -1,6 +1,6 @@
-# SSD1306 SPI OLED
+= SSD1306 SPI OLED
 
-## A fast SSD1306 Arduino library for OLED displays (SPI only)
+== A fast SSD1306 Arduino library for OLED displays +++<br/>+++ (SPI only)
 
 Having received my cheap 0.96" Serial 128X64 OLED display from China I tried to get it to display something.
 
@@ -8,19 +8,18 @@ According to the seller, the OLED display uses the SSD1306 driver IC. So after a
 
 So it was back to basics and the SSD1306 datasheet (the application note at the end of the datasheet was very useful).  A few(?) lines of code later and text was finally appearing on the display.
 
-Having used [Arthur Liberman's PCD8544_SPI library][1] with my Nokia 5110 LCD display, I thought I would use it as the basis for this SSD1306_SPI library.
-
-[1]: http://forum.arduino.cc/index.php?PHPSESSID=5qoe2ghj5oloh918gta07ulph7&topic=176794.0
+Having used http://forum.arduino.cc/index.php?PHPSESSID=5qoe2ghj5oloh918gta07ulph7&topic=176794.0[Arthur Liberman's PCD8544_SPI library] with my Nokia 5110 LCD display, I thought I would use it as the basis for this SSD1306_SPI library.
 
 The library uses Arduino's SPI bus. It assumes your Arduino is running at 16MHz, and uses a /4 SPI (default) divider for an effective 4MHz SPI speed.
 
-## Wiring
+== Wiring
 
 The library is configured to run on the Atmega168/328 (Uno, Mini, Nano, Duemilanove), but it can be reconfigured to run on any AVR based Arduino board.
 By default it uses Digital Pins 8 - 13 (PORT B).
 
+[options="header",cols="2",width="50%"]
+|======
 | OLED pin | Arduino pin
-|------|------
 | GND | GND
 | VCC | 3.3v (or VCC)
 | D0 | D13 (SCLK)
@@ -28,12 +27,13 @@ By default it uses Digital Pins 8 - 13 (PORT B).
 | RES | D8
 | DC | D9
 | CS | D10
+|======
 
 The SSD1306 is rated at 3.3v, so I connected the OLED display to an Arduino Pro Mini running at 3.3v.
 
-**Note:** There is some mention on forums that people have had problems trying to run SSD1306 based OLED displays at 5v levels. You may need to use level shifters (e.g. CD4050) to get nice and clean 3.3v signals to the OLED.
+NOTE: There is some mention on forums that people have had problems trying to run SSD1306 based OLED displays at 5v levels. You may need to use level shifters (e.g. CD4050) to get nice and clean 3.3v signals to the OLED.
 
-## Code
+== Code
 
 There are two versions of this library.
 
@@ -45,7 +45,7 @@ The feature set may be quite basic (compared to u8glib or Adafruit), but it's fa
 
 It does not contain any protection against going out of the frame buffer (or the physical screen) so make sure you handle the screen borders properly.
 
-### Usage
+=== Usage
 
 Call `begin()` in your `setup()` method.
 
@@ -63,9 +63,10 @@ When using the _frame buffer_ library, call `renderAll()` after you finish doing
 
 These last 3 methods assume the screen is 128x64.
 
-## Methods
+== Methods
 
-````c
+[source,c]
+----
 PCD8544_SPI	lcd; // Declares a non-FrameBuffered instance.
 PCD8544_SPI_FB	lcd; // Declares a FrameBuffered instance.
 
@@ -86,11 +87,12 @@ void clear();
 void gotoXY(uint8_t x, uint8_t y);
 virtual size_t write(uint8_t uint8_t);
 void writeBitmap(const uint8_t *bitmap, uint8_t x, uint8_t y, uint8_t width, uint8_t height);
-````
+----
 
-## Example
+== Example
 
-````c
+[source,c]
+----
 #include <SPI.h>
 #include <SSD1306_SPI.h>
 
@@ -122,5 +124,4 @@ void loop()
 #endif
 	delay(1000);
 }
-
-````
+----
